@@ -6,7 +6,10 @@ import java.io.FileNotFoundException
 import java.util.logging.Level
 import java.util.logging.LogManager
 import java.util.*
-
+/**
+ * Permite registrar un documento XML con libros registrados y permite obtener información de ellos mediante sus métodos.
+ * @constructor Recibe la ruta del archivo.
+ * @param pathName La ruta del archivo. Preferible utilizar rutas absolutas.*/
 class CatalogoLibrosXML(val pathName: String) {
 
     private lateinit var document: Document
@@ -38,6 +41,10 @@ class CatalogoLibrosXML(val pathName: String) {
         }
     }
 
+    /**
+     * A través de un id de un libro, comprueba si está registrado en el archivo XML.
+     * @param idLibro El id del libro, con letras y números.
+     * @returns Boolean.*/
     fun existeLibro(idLibro: String): Boolean {
         log.info("Se ejecuta fun existeLibro. El idLibro recibido es $idLibro.")
         return listaLibros.any {
@@ -45,6 +52,10 @@ class CatalogoLibrosXML(val pathName: String) {
         }
     }
 
+    /**
+     * Mapea el nombre de cada característica de un libro al valor. En caso de que no exista el libro, devuelve un emptyMap
+     * @param idLibro El id del libro, con letras y números.
+     * @return Mapa[nombre de la característica] = descripción.*/
     fun infoLibro(idLibro: String): Map<String, Any> {
         log.info("Se ejecuta fun infoLibro. El idLibro recibido es $idLibro")
         val libro = listaLibros.find { it.attributes.getNamedItem("id").toString() == "id=\"$idLibro\"" }
@@ -84,7 +95,8 @@ class CatalogoLibrosXML(val pathName: String) {
     }
 
 }
-
+/**
+ * Prueba de la clase CatalogoLibrosXML.*/
 fun main() {
     val catalogo =
         CatalogoLibrosXML("D:\\Usuarios\\alexg\\Documents\\instituto\\superior 1\\DAM1-5_4-AGP\\src\\xml\\Catalog.xml")

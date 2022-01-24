@@ -6,34 +6,33 @@ import org.w3c.dom.Node
 import org.w3c.dom.NodeList
 import java.io.File
 import javax.xml.parsers.DocumentBuilderFactory
-
+/**
+ * Devuelve un Document de una ruta. Preferible usar rutas absolutas.
+ * @returns Document (Estructura XML por nodos).
+ * @param pathName Ruta del documento XML.*/
 fun readXml(pathName: String): Document {
-    /**
-     * Preferible usar rutas absolutas en el parámetro.
-     * @returns Document (Estructura XML por nodos)
-     * @param pathName Ruta del documento XML*/
     val xmlFile = File(pathName)
     return  DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlFile)
 }
-
+/**
+ * Mapea todos los atributos de un elemento con el nombre de estos como clave y su valor como value.
+ * @returns Map con el nombre del atributo como key y su valor asignado como value
+ * @param e Elemento del Document con posibles hijos.*/
 fun obtenerAtributosEnMapKV(e: Element ):MutableMap<String, String>
 {
-    /**
-     * @returns Map con el nombre del atributo como key y su valor asignado como value
-     * @param e Elemento del Document con posibles hijos*/
     val mMap = mutableMapOf<String, String>()
     for(j in 0..e.attributes.length - 1)
         mMap.putIfAbsent(e.attributes.item(j).nodeName, e.attributes.item(j).nodeValue)
     return mMap
 }
-
+/**
+ * A través de un Document y un nombre, te devuelve una lista de todos los nodos que tienen ese nombre como tagName.
+ * @returns Lista de todos los nodos hijos de un elemento según el nombre de este.
+ * @param doc Document (Estructura XML por nodos)
+ * @param tagName El nombre del elemento*/
 fun obtenerListaNodosPorNombre(doc: Document, tagName: String): MutableList<Node>
 {
 
-    /**
-     * @returns Lista de todos los nodos hijos de un elemento según el nombre de este.
-     * @param doc Document (Estructura XML por nodos)
-     * @param tagName El nombre del elemento*/
 
     val bookList: NodeList = doc.getElementsByTagName(tagName)
     val lista = mutableListOf<Node>()
